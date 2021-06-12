@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="scramble.css">
+    <link href = "scramble.js" type="text/javascript">
+</head>
+<body>
+    <header> 
+        <h1> Guess the word game</h1>
+    </header>
+    <section>
+        <div class="gameArea">
+            <h3 class="msg"></h3>
+            <input type="text" class="hidden">
+            <button class="btn"> Click here to start </button>
+        </div>
+    </section>
+    <script>
+        const msg = document.querySelector('.msg');
+            const guess = document.querySelector('input');
+            const btn = document.querySelector('.btn');
+            let play = false;
+            let words = ['python','javascript','java','c++','php','web','android','html','css','reactjs','mongodb','sql','angular','swift','nodejs','development',];
+            let newWords = "";
+            let randWords = "";
+            const createNewWords = () =>{
+                 let ranNum = Math.floor(Math.random() * words.length);
+                 let newWord = words[ranNum];
+                 return newWord;
+                }
+                const scrambleWords = (arr_new) =>{
+                        for(let i=arr_new.length-1;i>=0;i--)
+                        {
+                            let temp=arr_new[i];
+                           // console.log(arr_new[0]);
+                           // console.log(temp);
+                            let j = Math.floor(Math.random()*(i+1));
+                            arr_new[i]=arr_new[j];
+                            arr_new[j]=temp;
+                         //  console.log(arr_new[i]);
+                            
+                          
+                        }
+                          return arr_new;
+                          //console.log(arr_new);
+                };
+
+            btn.addEventListener('click', () => {
+
+                if (!play) {
+                    play = true;
+                    btn.innerHTML = "Guess";
+                    guess.classList.toggle('hidden');
+                    newWords = createNewWords();
+                    console.log(newWords.split(""));
+                   randWords = scrambleWords(newWords.split(""));
+                   
+                   final = randWords.join("");
+                   console.log(final);
+                   msg.innerHTML = `Guess the word: ${final}`;
+
+                }
+                else
+                {
+                    let tempWord = guess.value;
+                    if(tempWord===newWords)
+                    {
+                        play  = false;
+                        msg.innerHTML = `Awesome It's Correct!!. It is ${tempWord}`;
+                        btn.innerHTML = "Start Again";
+                        guess.classList.toggle('hidden');
+                        guess.value="";
+                    }
+                    else
+                    {
+                       msg.innerHTML = `Sorry, dear!! It's incorrect. Please try again for ${final}`;
+
+
+                    }
+                }
+            });
+    </script>
+</body>
+</html>
